@@ -12,7 +12,7 @@ const displayMeals = meals =>{
 
     //step-1,  container element
     const mealsContainer = document.getElementById('meals-container');
-    mealsContainer.innerHTML ='';
+    mealsContainer.innerText ='';
     meals.forEach(meal =>{
 
         // step-2, create child for each element 
@@ -21,20 +21,22 @@ const displayMeals = meals =>{
     
         //step-3, set content of the child element
         mealDiv.innerHTML =`
-        <div class="card">
-          <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title">'${meal.strMeal}'</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
+        <div class="card w-60 h-60">
+            <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">'${meal.strMeal}'</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealDetails">
+                  Details
+                </button>
+            </div>
         </div>
         `;
 
         //step-4, appendChild,
         mealsContainer.appendChild(mealDiv);
-
-
-    })
+       
+    });
 }
 
 const searchMeals = () =>{
