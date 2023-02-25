@@ -5,7 +5,9 @@ const loadMeals =(searchText) =>{
     fetch(url)
     .then(res => res.json())
     .then(data =>  displayMeals(data.meals))
+    
 }
+
 
 const displayMeals = meals =>{
     //console.log(meals);
@@ -21,12 +23,12 @@ const displayMeals = meals =>{
     
         //step-3, set content of the child element
         mealDiv.innerHTML =`
-        <div class="card w-60 h-60">
+        <div class="card w-60 h-5s0">
             <img src="${meal.strMealThumb}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">'${meal.strMeal}'</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealDetails">
+                <button onclick="loadMealDetail2('${meal.idMeal}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mealDetails">
                   Details
                 </button>
             </div>
@@ -45,6 +47,38 @@ const searchMeals = () =>{
     console.log(searchText);
     //search meals
     loadMeals(searchText);
+
+}
+
+const loadMealDetail = idMeal => {
+    const url =`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+    fetch(url)
+    .then(res => res.json())
+    .then(data => displayMealDetails(data.meals[0]))
+    .catch(error => {
+        console.log(error)
+    })
+
+}
+
+
+// async await
+const loadMealDetail2 = async(idMeal) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchText}`
+   try{
+    const res = await fetch(url);
+    const data = await res.json();
+    displayMealDetails(data.meals[0]);
+   }
+   catch(error){
+    console.log(error);
+   }
+}
+
+const displayMealDetails =meal => {
+    console.log(meal)
+    document.getElementById('mealDetailsLabel').innerText = meal.strMeal +', '+ meal.strCategory +', '+ meal.strArea;
+    document.getElementById('modal-field').innerText = meal.strIngredient1 +', '+meal.strIngredient2+', '+meal.strIngredient3+', '+meal.strIngredient4 +', '+meal.strIngredient5+', '+meal.strIngredient6 +', '+meal.strIngredient7+', '+meal.strIngredient8+', '+meal.strIngredient9+', '+meal.strIngredient10;
 
 }
 
